@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
+//call models
+var emails = require('../models/emails');
+
 // Welcome Page
 //router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
@@ -12,10 +15,21 @@ router.get('/dashboard', ensureAuthenticated, (req, res) =>
   })
 );
 
+router.get('/crm', ensureAuthenticated, (req, res) => {
+	emails.find(function(err, emails) 
+		{
+		res.render('crm', {emails: emails} );
+		});
+});
 
-var part = require('../models/part');
+var parts = require('../models/part');
 
-
+router.get('/dashboard', ensureAuthenticated, (req, res) => {
+	parts.find(function(err, parts)
+		{
+		res.render('dashboard', {topSelling: parts} );	
+		});
+});
 
 router.get('/', function(req, res) {
 	res.render('home');

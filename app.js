@@ -1,6 +1,7 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
+var expressHbs = require('express-handlebars');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -22,9 +23,9 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
-// EJS
-app.use(expressLayouts);
-app.set('view engine', 'ejs');
+app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
+app.set('view engine', '.hbs');
+
 
 // Express body parser
 app.use(express.urlencoded({ extended: true }));
