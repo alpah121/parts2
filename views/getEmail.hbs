@@ -1,0 +1,23 @@
+router.get('/getEmail/:partID', function(req, res) {
+	parts.findOne({id: req.params.partID}, function(error, part) { res.render('getEmail', {part: part});});
+});
+
+router.post('/getEmail', function (req, res) {
+	//name, email, lookedAt
+	var email = new emails(req.body);
+	email.save(function (error, email) {if (error) console.log(error)});
+});
+
+imagePath: {type: String, required: true},
+	name: {type: String, required: true},
+	goesTo: {type: String, required: true},
+	keywords: {type: String, required: true}
+	
+<img width="600" height="400" src="{{imagePath}}" /><br/>
+<h2>{{name}}</h2>
+<form action="/getEmail" method="post">
+<input type="text" name="name" /><<br/>
+<input type="text" name="email" /><br/>
+<input type="hidden" name="lookedAt" value="{{goesTo}}"/>
+<input type="submit value="Get Link"/>
+</form>

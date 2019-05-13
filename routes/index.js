@@ -45,7 +45,13 @@ router.post('/parts/new', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/getEmail/:partID', function(req, res) {
-	parts.findOne(function(error, part) { res.render('getEmail', {part: part});});
+	parts.findOne({id: req.params.partID}, function(error, part) { res.render('getEmail', {part: part});});
+});
+
+router.post('/getEmail', function (req, res) {
+	//name, email, lookedAt
+	var email = new emails(req.body);
+	email.save(function (error, email) {if (error) console.log(error)});
 });
 
 router.get('/', function(req, res) {
