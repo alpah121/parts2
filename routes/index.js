@@ -31,6 +31,23 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 		});
 });
 
+router.post('/parts/new', ensureAuthenticated, function (req, res) {
+	if (Array.isArray(req.body))
+		{
+		parts.insertMany(req.body, function(error, newParts) {
+			if (error) 
+				{
+				console.log(error);
+				}
+				
+			 });	
+		}
+});
+
+router.get('/getEmail/:partID', function(req, res) {
+	parts.findOne(function(error, part) { res.render('getEmail', {part: part});});
+});
+
 router.get('/', function(req, res) {
 	res.render('home');
 	});
