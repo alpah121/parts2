@@ -32,16 +32,17 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/parts/new', ensureAuthenticated, function (req, res) {
-	if (Array.isArray(req.body))
-		{
-		parts.insertMany(req.body, function(error, newParts) {
-			if (error) 
-				{
-				console.log(error);
-				}
-				
-			 });	
-		}
+	console.log(req.body);
+	var part = new parts({
+		imagePath: req.body.imagePath,
+		name: req.body.name,
+		goesTo: req.body.goesTo,
+		keywords: req.body.keywords
+		});
+	part.save((error, part) => {if (error) {console.log(error);}});
+	
+		
+		
 });
 
 router.get('/getEmail/:partID', function(req, res) {
@@ -61,7 +62,7 @@ router.get('/', function(req, res) {
 router.get('/search', function(req, res) {
 	if (req.query.hasOwnProperty('q'))
 	{
-	part.find({ keywords: req.query.q}, 
+	parts.find({ keywords: req.query.q}, 
 	function (err, parts) 
 		{
 		if (err) console.log(err);

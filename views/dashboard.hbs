@@ -1,5 +1,48 @@
+<script type="text/javascript">
+items = [];
+
+function addItem()
+{
+var imagePath = document.getElementById("imagePath");
+var name = document.getElementById("name");
+var goesTo = document.getElementById("goesTo");
+var keywords = document.getElementById("keywords");
+var part = {imagePath, name, goesTo, keywords};
+items.push(part);
+xhttp = new XMLHttpRequest();
+xhttp.open("POST", "/parts/new", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.send("imagePath=" + imagePath.value
+ + "&name=" + name.value
+ + "&goesTo=" + goesTo.value
+ + "&keywords=" + keywords.value
+ 
+ );
+
+}
+
+function submitList()
+{
+xhttp = new XMLHttpRequest();
+xhttp.open("POST", "/parts/new", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.send("json=hi&fname=jacob");
+}
+
+</script>
 <h1>Top Clicked On Parts</h1>
 <p>You should consider adding these to your lowe store</p>
+<div id="list">
+
+</div>
+<button onclick="submitList()">Enter Parts</button>
+<h3>Add New Part</h3>
+Image Path: <input type="text" id="imagePath" /><br/>
+Name: <input type="text" id="name" /><br/>
+Goes To: <input type="text" id="goesTo" /><br/>
+Keywords: <input type="text" id="keywords" /><br/>
+<button onclick="addItem()">Add Item</button>
+
 <ul>
 {{#each topSelling}}
 <h3>{{title}}</h3>
